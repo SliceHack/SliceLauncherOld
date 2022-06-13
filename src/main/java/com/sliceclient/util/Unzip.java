@@ -7,11 +7,6 @@ import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/**
- * UnzipUtil
- *
- * @author Nick & Github Copilot
- * */
 @Getter @Setter
 @SuppressWarnings("all")
 public class Unzip implements Runnable {
@@ -35,16 +30,17 @@ public class Unzip implements Runnable {
             }
             BufferedOutputStream bos = null;
             // zipped input
+
             FileInputStream fis = new FileInputStream(source);
             ZipInputStream zis = new ZipInputStream(new BufferedInputStream(fis));
             ZipEntry entry;
             while((entry = zis.getNextEntry()) != null) {
                 String fileName = entry.getName();
                 File file = new File(dest + File.separator + fileName);
+
                 if (!entry.isDirectory()) {
                     extractFileContentFromArchive(file, zis);
-                }
-                else{
+                } else{
                     if(!file.exists()){
                         file.mkdirs();
                     }
