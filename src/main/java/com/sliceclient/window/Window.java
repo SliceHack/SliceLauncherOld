@@ -34,6 +34,14 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        frame.setLayout(null);
+    }
+
+    /**
+     * Adds to the frame
+     * */
+    public void add(JComponent component) {
+        frame.add(component);
     }
 
 
