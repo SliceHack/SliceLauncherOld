@@ -1,16 +1,15 @@
 package com.sliceclient;
 
+import com.sliceclient.handler.ComponentManager;
+import com.sliceclient.input.KeyHandler;
+import com.sliceclient.input.MouseHandler;
 import com.sliceclient.util.DownloadUtil;
-import com.sliceclient.util.Unzip;
 import com.sliceclient.util.UnzipUtil;
 import com.sliceclient.visual.Background;
-import com.sliceclient.visual.Button;
 import com.sliceclient.window.Window;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 
 /**
@@ -21,9 +20,18 @@ public class Slice {
 
     public static Slice INSTANCE;
 
+    /** window */
     private final Window window;
 
+    /** UI */
     private Background background;
+
+    /** input */
+    private KeyHandler keyHandler;
+    private MouseHandler mouseHandler;
+
+    /** manager */
+    private ComponentManager componentManager;
 
     /**
      * Constructor
@@ -32,7 +40,11 @@ public class Slice {
         INSTANCE = this;
 
         window = new Window("Slice", 800, 600);
+
+        window.addKeyListener(keyHandler = new KeyHandler());
+        window.addMouseListener(mouseHandler = new MouseHandler());
         window.add(background = new Background());
+
         window.show(true);
     }
 
@@ -50,19 +62,17 @@ public class Slice {
     public static void main(String[] args) {
         String path = System.getProperty("user.home") + "//Slice//assets//launcher//background";
 
-        File parent = new File(path).getParentFile();
-        File file = new File(path);
-
-        File zip = new File(file + File.separator + "Background.zip");
-
-        File file1 = new File(file, "frame_000_delay-0.03s.png");
+        File parent = new File(path).getParentFile(),
+                file = new File(path),
+                zip = new File(file + File.separator + "Background.zip"),
+                file1 = new File(file, "frame_000_delay-0.03s.png");
 
         if(!file1.exists()) {
             DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
             UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
-        } else if(zip.exists()){
-            zip.delete();
         }
+
+        if(zip.exists() && file1.exists()) zip.delete();
 
         new Slice();
     }

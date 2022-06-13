@@ -19,7 +19,6 @@ public class Background extends JComponent {
         setBounds(0, 0, Slice.INSTANCE.getWindow().getWidth(), Slice.INSTANCE.getWindow().getHeight());
     }
 
-
     /**
      * Draws the background
      */
@@ -48,6 +47,7 @@ public class Background extends JComponent {
             updateIndex();
             tick = 0;
         }
+        Slice.INSTANCE.getComponentManager().draw(g2d);
     }
 
     /**

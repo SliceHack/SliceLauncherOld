@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 /**
  * The window of the launcher
@@ -41,6 +43,20 @@ public class Window {
      * */
     public void add(JComponent component) {
         frame.add(component);
+    }
+
+    /**
+     * Adds a key listener to the frame
+     * */
+    public void addKeyListener(KeyListener listener) {
+        frame.addKeyListener(listener);
+    }
+
+    /**
+     * Adds a mouse listener to the frame
+     * */
+    public void addMouseListener(MouseListener listener) {
+        frame.addMouseListener(listener);
     }
 
 
