@@ -64,15 +64,29 @@ public class Slice {
 
         File parent = new File(path).getParentFile(),
                 file = new File(path),
+                fileFont = new File(parent + File.separator + "font"),
                 zip = new File(file + File.separator + "Background.zip"),
-                file1 = new File(file, "frame_000_delay-0.03s.png");
+                zipFont = new File(parent + File.separator + "Poppins.zip"),
+                file1 = new File(file, "frame_000_delay-0.03s.png"),
+                file2 = new File(fileFont, "Poppins-Regular.ttf"),
+                ofl = new File(fileFont, "OFL.txt");
+
+        if(!parent.exists()) parent.mkdirs();
+        else if(!fileFont.exists()) fileFont.mkdirs();
 
         if(!file1.exists()) {
             DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
             UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
         }
 
+        if(!file2.exists()) {
+            DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Poppins.zip", zipFont.getAbsolutePath());
+            UnzipUtil.unzip(zipFont.getAbsolutePath(),fileFont.getAbsolutePath());
+        }
+
         if(zip.exists() && file1.exists()) zip.delete();
+        if(zipFont.exists() && file2.exists()) zipFont.delete();
+        if(ofl.exists()) ofl.delete();
 
         new Slice();
     }
