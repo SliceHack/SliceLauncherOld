@@ -21,6 +21,10 @@ public class MouseHandler extends MouseAdapter {
         Slice.INSTANCE.getComponentManager().mouseClicked(e);
     }
 
+    public void mouseMoved(MouseEvent e) {
+        Slice.INSTANCE.getComponentManager().mouseMoved(e);
+    }
+
     /**
      * The mouse released method
      *

@@ -1,6 +1,7 @@
 package com.sliceclient.handler;
 
 import com.sliceclient.ui.Component;
+import com.sliceclient.ui.components.Button;
 import com.sliceclient.ui.components.Overlay;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class ComponentManager extends Component {
 
     public ComponentManager() {
         register(new Overlay());
+        components.forEach(Component::init);
     }
 
     /**

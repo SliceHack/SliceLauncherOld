@@ -31,11 +31,9 @@ public abstract class Component {
      *
      * @param e The mouse event
      * */
-    public void mousePressed(MouseEvent e) {
-        System.out.println("Mouse pressed");
-    }
-
+    public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {}
 
     /**
      * key events
@@ -44,5 +42,10 @@ public abstract class Component {
      * */
     public void keyPressed(KeyEvent e) {}
     public void keyReleased(KeyEvent e) {}
+
+    /**
+     * When the component is created
+     * */
+    public void init() {}
 
 }
