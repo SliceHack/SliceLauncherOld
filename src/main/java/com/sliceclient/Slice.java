@@ -38,7 +38,7 @@ public class Slice {
      */
     Slice() {
         INSTANCE = this;
-
+        componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
 
         window.addKeyListener(keyHandler = new KeyHandler());

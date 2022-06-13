@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class ComponentManager {
+public class ComponentManager extends Component {
 
     private List<Component> components = new ArrayList<>();
 

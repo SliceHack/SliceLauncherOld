@@ -24,7 +24,10 @@ public abstract class Component {
      *
      * @param e The mouse event
      * */
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+        System.out.println("Mouse pressed");
+    }
+
     public void mouseReleased(MouseEvent e) {}
 
     /**
