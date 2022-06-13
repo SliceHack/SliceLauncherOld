@@ -25,24 +25,16 @@ public class Downlaoder implements Runnable {
 
     @Override
     public void run() {
-        try {
-            URL url = new URL(this.url);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            double fileSize = connection.getContentLength();
-            BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
-            FileOutputStream fos = new FileOutputStream(this.out);
-            BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-            byte[] data = new byte[1024];
-            double downloaded = 0;
-            int read = 0;
-            while ((read = in.read(data, 0, 1024)) >= 0) {
-                bout.write(data, 0, read);
-                downloaded += read;
-                double percent = (downloaded / fileSize) * 100;
-                System.out.println("Downloading " + this.out.getName() + " " + percent + "%");
+        try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(out.getAbsolutePath())) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+                System.out.println("Downloading " + url);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // handle exception
         }
     }
 }

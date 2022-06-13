@@ -1,6 +1,7 @@
 package com.sliceclient;
 
 import com.sliceclient.util.DownloadUtil;
+import com.sliceclient.util.Unzip;
 import com.sliceclient.util.UnzipUtil;
 import com.sliceclient.visual.Background;
 import com.sliceclient.visual.Button;
@@ -45,12 +46,13 @@ public class Slice {
         File parent = new File(path).getParentFile();
         File file = new File(path);
 
-        DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", new File(file + File.separator + "Background.zip").getAbsolutePath());
+        File zip = new File(file + File.separator + "Background.zip");
 
+        DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
+        UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
 
         new Slice();
     }
 
 
 }
-g

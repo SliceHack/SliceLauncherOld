@@ -2,12 +2,6 @@ package com.sliceclient.util;
 
 import lombok.experimental.UtilityClass;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 /**
  * Used for unzipping files.
  *
@@ -24,26 +18,6 @@ public class UnzipUtil {
      * */
     @SuppressWarnings("all")
     public static void unzip(String file, String destination) {
-        try {
-            String fileZip = file;
-            File destDir = new File(destination);
-            byte[] buffer = new byte[1024];
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
-            ZipEntry zipEntry = zis.getNextEntry();
-            while (zipEntry != null) {
-                File newFile = new File(destDir + File.separator + zipEntry.getName());
-                new File(newFile.getParent()).mkdirs();
-
-                FileOutputStream fos = new FileOutputStream(newFile);
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
-                }
-                fos.close();
-                zipEntry = zis.getNextEntry();
-            }
-            zis.closeEntry();
-            zis.close();
-        } catch (Exception ignored) {}
+        new Unzip(file, destination).run();
     }
 }
