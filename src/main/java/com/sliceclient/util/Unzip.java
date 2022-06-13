@@ -3,59 +3,70 @@ package com.sliceclient.util;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
  * UnzipUtil
  *
- * @author Nick
- * @version 1.0
- * @since 1.0
+ * @author Nick & Github Copilot
  * */
 @Getter @Setter
+@SuppressWarnings("all")
 public class Unzip implements Runnable {
 
     private String path, zipPath;
 
-    public Unzip(String zipPip, String path) {
-        this.zipPath = zipPip;
+    public Unzip(String zipPath, String path) {
+        this.zipPath = zipPath;
         this.path = path;
     }
 
     public void run() {
+        extract(zipPath, path);
+    }
+
+    private static void extract(String source, String dest){
         try {
-//            ZipInputStream zis = new ZipInputStream(Files.newInputStream(new File(zipPath).toPath()));
-//            extractFile(zis, path);
-        } catch (Exception e) {
+            File root = new File(dest);
+            if(!root.exists()){
+                root.mkdir();
+            }
+            BufferedOutputStream bos = null;
+            // zipped input
+            FileInputStream fis = new FileInputStream(source);
+            ZipInputStream zis = new ZipInputStream(new BufferedInputStream(fis));
+            ZipEntry entry;
+            while((entry = zis.getNextEntry()) != null) {
+                String fileName = entry.getName();
+                File file = new File(dest + File.separator + fileName);
+                if (!entry.isDirectory()) {
+                    extractFileContentFromArchive(file, zis);
+                }
+                else{
+                    if(!file.exists()){
+                        file.mkdirs();
+                    }
+                }
+                zis.closeEntry();
+            }
+            zis.close();
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Extracts a zip entry (file entry)
-     *
-     * @param zipIn The zip input stream
-     * @param filePath The path of the file
-     */
-    private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.mkdirs();
+    private static void extractFileContentFromArchive(File file, ZipInputStream zis) throws IOException{
+        FileOutputStream fos = new FileOutputStream(file);
+        BufferedOutputStream bos = new BufferedOutputStream(fos, 4086);
+        int len = 0;
+        byte data[] = new byte[4086];
+        while ((len = zis.read(data, 0, 4086)) != -1) {
+            bos.write(data, 0, len);
         }
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = zipIn.read(buffer)) != -1) {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath + File.separator + zipIn.getNextEntry().getName()));
-            bos.write(buffer, 0, read);
-            bos.flush();
-            bos.close();
-        }
-        System.out.println("Extracted " + filePath);
-        zipIn.closeEntry();
+        bos.flush();
+        bos.close();
     }
 }

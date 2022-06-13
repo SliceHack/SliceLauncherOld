@@ -34,7 +34,6 @@ public class Downlaoder implements Runnable {
                 System.out.println("Downloading " + url);
             }
         } catch (IOException e) {
-            // handle exception
         }
     }
 }
