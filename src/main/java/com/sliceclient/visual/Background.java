@@ -1,9 +1,6 @@
 package com.sliceclient.visual;
 
 import com.sliceclient.Slice;
-import com.sliceclient.util.DownloadUtil;
-import com.sliceclient.util.ResourceUtil;
-import com.sliceclient.util.UnzipUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,12 +8,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 public class Background extends JComponent {
 
     /** index of background animation */
     private int index;
+    private int tick;
 
     public Background() {
         setBounds(0, 0, Slice.INSTANCE.getWindow().getWidth(), Slice.INSTANCE.getWindow().getHeight());
@@ -27,7 +24,6 @@ public class Background extends JComponent {
      * Draws the background
      */
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.BLACK);
@@ -35,18 +31,23 @@ public class Background extends JComponent {
         String path = System.getProperty("user.home") + "//Slice//assets//launcher//background";
         path += "//" + "frame_" + format3Places(index) + "_delay-0.03s" + ".png";
 
-        File parent = new File(path).getParentFile();
         File file = new File(path);
 
+        BufferedImage img = null;
         try {
-            if (!parent.exists()) parent.mkdirs();
-            if (!file.exists()) {
-                return;
-            }
-        } catch (Exception ignored){}
+            img = ImageIO.read(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // add saturation to the image
+        g2d.drawImage(img, 0, 0, getWidth(), getHeight(), Color.WHITE, null);
 
         Slice.INSTANCE.drawBackground();
-        updateIndex();
+        tick++;
+        if(tick >= 3) {
+            updateIndex();
+            tick = 0;
+        }
     }
 
     /**
@@ -67,4 +68,5 @@ public class Background extends JComponent {
         if(index >= 215) index = 0;
         index++;
     }
+
 }

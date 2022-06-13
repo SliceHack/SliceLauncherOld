@@ -9,6 +9,8 @@ import com.sliceclient.window.Window;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -21,6 +23,8 @@ public class Slice {
 
     private final Window window;
 
+    private Background background;
+
     /**
      * Constructor
      */
@@ -28,18 +32,21 @@ public class Slice {
         INSTANCE = this;
 
         window = new Window("Slice", 800, 600);
-        window.add(new Background());
+        window.add(background = new Background());
         window.show(true);
     }
 
     public void drawBackground() {
-        window.getFrame().getComponents()[0].repaint();
+        Background background = getBackground();
+        background.setBounds(0, 0, getWindow().getFrame().getWidth(), getWindow().getFrame().getHeight());
+        background.repaint();
     }
 
     /**
      * The main method of the launcher
      * @param args The arguments of the launcher
      * */
+    @SuppressWarnings("all")
     public static void main(String[] args) {
         String path = System.getProperty("user.home") + "//Slice//assets//launcher//background";
 
@@ -53,6 +60,8 @@ public class Slice {
         if(!file1.exists()) {
             DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
             UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
+        } else if(zip.exists()){
+            zip.delete();
         }
 
         new Slice();
