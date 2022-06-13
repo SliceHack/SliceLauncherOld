@@ -43,7 +43,7 @@ public class Background extends JComponent {
 
         Slice.INSTANCE.drawBackground();
         tick++;
-        if(tick >= 3) {
+        if(tick >= 5) {
             updateIndex();
             tick = 0;
         }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -59,11 +60,41 @@ public class Window {
         frame.addMouseListener(listener);
     }
 
-
     /**
      * Shows the window
      */
     public void show(boolean visible) {
         frame.setVisible(visible);
+    }
+
+    /**
+     * Sets the window to fullscreen
+     * */
+    public void setFullScreen(boolean fullScreen) {
+        frame.dispose();
+        frame.setUndecorated(fullScreen);
+        frame.setResizable(!fullScreen);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getScreenDevices()[getCurrentMonitor()];
+        gd.setFullScreenWindow(fullScreen ? frame : null);
+        frame.setVisible(true);
+    }
+
+    public int getCurrentMonitor() {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gd = ge.getScreenDevices();
+        for(int i = 0; i < gd.length; i++) {
+            if(gd[i].getDefaultConfiguration().getBounds().contains(frame.getLocation())) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Checks if the window is fullscreen
+     * */
+    public boolean isFullScreen() {
+        return frame.isUndecorated();
     }
 }

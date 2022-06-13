@@ -18,6 +18,10 @@ public class KeyHandler extends KeyAdapter {
      * @param e The key event
      * */
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_F11) {
+            Slice.INSTANCE.getWindow().setFullScreen(!Slice.INSTANCE.getWindow().isFullScreen());
+        }
+
         Slice.INSTANCE.getComponentManager().keyPressed(e);
     }
 

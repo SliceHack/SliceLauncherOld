@@ -17,9 +17,9 @@ public class Overlay extends Component {
 
         float scaledWidth2 = getWindowWidth() / 4.2f;
         float scaledHeight = getWindowHeight() / 3.2f;
-
         float scaledX = (((getWindowWidth() - scaledWidth) / 2f)-(scaledWidth2));
         float scaledY = ((getWindowHeight() - fontHeight) / 2f)-(scaledHeight);
+
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);
         g2d.drawString("Slice", (scaledX), scaledY);
