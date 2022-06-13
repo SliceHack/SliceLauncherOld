@@ -48,6 +48,8 @@ public class Background extends JComponent {
             tick = 0;
         }
         Slice.INSTANCE.getComponentManager().draw(g2d);
+        Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowHeight(getHeight()));
+        Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowWidth(getWidth()));
     }
 
     /**

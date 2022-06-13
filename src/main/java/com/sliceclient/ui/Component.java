@@ -1,5 +1,8 @@
 package com.sliceclient.ui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -9,8 +12,12 @@ import java.awt.event.MouseEvent;
  *
  * @author Nick
  * */
+@Getter @Setter
 @SuppressWarnings("all")
 public abstract class Component {
+
+    /** Window positions */
+    private int windowHeight, windowWidth;
 
     /**
      * draws the component
