@@ -48,8 +48,12 @@ public class Slice {
 
         File zip = new File(file + File.separator + "Background.zip");
 
-        DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
-        UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
+        File file1 = new File(file, "frame_000_delay-0.03s.png");
+
+        if(!file1.exists()) {
+            DownloadUtil.downloadFile("https://github.com/NickReset/SliceResources/raw/main/Background.zip", zip.getAbsolutePath());
+            UnzipUtil.unzip(zip.getAbsolutePath(), zip.getParentFile().getAbsolutePath());
+        }
 
         new Slice();
     }
