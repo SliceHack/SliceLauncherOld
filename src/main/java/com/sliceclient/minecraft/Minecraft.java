@@ -3,7 +3,6 @@ package com.sliceclient.minecraft;
 import com.sliceclient.Slice;
 import lombok.Getter;
 
-import javax.swing.text.Style;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -42,6 +41,9 @@ public class Minecraft {
                 while ((line = reader.readLine()) != null) {
                     if(line.contains("Session ID is")) {
                         String[] things = line.split(":");
+                        things[0] = things[0] + ":";
+                        things[1] = things[1] + ":";
+                        things[2] = things[2] + ":";
                         things[4] = ":[REDACTED]";
                         things[5] = ")";
                         StringBuilder sb = new StringBuilder();

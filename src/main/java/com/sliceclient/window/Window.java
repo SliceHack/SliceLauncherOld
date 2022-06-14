@@ -93,9 +93,6 @@ public class Window {
      * Sets the window to fullscreen
      * */
     public void setFullScreen(boolean fullScreen) {
-        if(!Slice.INSTANCE.isAuthorized())
-            return;
-
         frame.dispose();
         frame.setUndecorated(fullScreen);
         frame.setResizable(!fullScreen);

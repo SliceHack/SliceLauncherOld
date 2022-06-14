@@ -53,7 +53,6 @@ public class Slice {
         componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
         session = new Session("Player", "0", "0", "legacy");
-        window.setResizable(isAuthorized());
 
         initBackground();
     }
