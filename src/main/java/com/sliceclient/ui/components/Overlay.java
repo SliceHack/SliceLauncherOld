@@ -47,4 +47,8 @@ public class Overlay extends Component {
     public void mouseReleased(MouseEvent e) {
         buttons.forEach(button -> button.mouseReleased(e));
     }
+
+    public void mouseMoved(MouseEvent e) {
+        buttons.forEach(button -> button.mouseMoved(e));
+    }
 }
