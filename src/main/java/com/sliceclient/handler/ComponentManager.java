@@ -1,7 +1,9 @@
 package com.sliceclient.handler;
 
+import com.sliceclient.Slice;
 import com.sliceclient.ui.Component;
 import com.sliceclient.ui.components.Button;
+import com.sliceclient.ui.components.NotAuth;
 import com.sliceclient.ui.components.Overlay;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +26,8 @@ public class ComponentManager extends Component {
     private List<Component> components = new ArrayList<>();
 
     public ComponentManager() {
-        register(new Overlay());
+        if(Slice.INSTANCE.isAuthorized()) register(new Overlay());
+        else register(new NotAuth());
         components.forEach(Component::init);
     }
 

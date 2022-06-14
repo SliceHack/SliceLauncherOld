@@ -1,5 +1,6 @@
 package com.sliceclient.window;
 
+import com.sliceclient.Slice;
 import com.sliceclient.input.KeyHandler;
 import com.sliceclient.input.MouseHandler;
 import com.sliceclient.visual.Background;
@@ -78,10 +79,23 @@ public class Window {
         frame.setVisible(visible);
     }
 
+    public void setResizable(boolean resizable) {
+        if(frame.isVisible()) {
+            frame.dispose();
+            frame.setResizable(resizable);
+            frame.setVisible(true);
+            return;
+        }
+        frame.setResizable(resizable);
+    }
+
     /**
      * Sets the window to fullscreen
      * */
     public void setFullScreen(boolean fullScreen) {
+        if(!Slice.INSTANCE.isAuthorized())
+            return;
+
         frame.dispose();
         frame.setUndecorated(fullScreen);
         frame.setResizable(!fullScreen);
