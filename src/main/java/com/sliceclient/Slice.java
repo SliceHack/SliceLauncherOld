@@ -54,7 +54,6 @@ public class Slice {
     }
 
     public void initBackground() {
-        System.out.println("Initializing background...");
         window.addKeyListener(keyHandler = new KeyHandler());
         window.addMouseListener(mouseHandler = new MouseHandler());
         window.addMouseMotionListener(mouseHandler);

@@ -3,6 +3,7 @@ package com.sliceclient.minecraft;
 import com.sliceclient.Slice;
 import lombok.Getter;
 
+import javax.swing.text.Style;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -33,12 +34,23 @@ public class Minecraft {
                         + "--userType " + Slice.INSTANCE.getSession().getUserType() + " "
                         + "--userProperties " + "{} ";
 
-                System.out.println(command);
                 Process process = Runtime.getRuntime().exec(command);
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String line;
+
                 while ((line = reader.readLine()) != null) {
+                    if(line.contains("Session ID is")) {
+                        String[] things = line.split(":");
+                        things[4] = ":[REDACTED]";
+                        things[5] = ")";
+                        StringBuilder sb = new StringBuilder();
+                        for(String s : things) {
+                            sb.append(s);
+                        }
+                        System.out.println(sb.toString());
+                        return;
+                    }
                     System.out.println(line);
                 }
                 reader.close();
