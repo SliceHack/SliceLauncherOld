@@ -1,11 +1,12 @@
 package com.sliceclient;
 
+import com.sliceclient.api.API;
 import com.sliceclient.handler.ComponentManager;
 import com.sliceclient.input.KeyHandler;
 import com.sliceclient.input.MouseHandler;
 import com.sliceclient.minecraft.session.Session;
 import com.sliceclient.util.DownloadUtil;
-import com.sliceclient.util.LoginUtil;
+import com.sliceclient.util.HardwareUtil;
 import com.sliceclient.util.UnzipUtil;
 import com.sliceclient.visual.Background;
 import com.sliceclient.window.Window;
@@ -13,7 +14,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.util.Objects;
 
 /**
  * The main class of the launcher
@@ -42,11 +42,14 @@ public class Slice {
     /** Minecraft */
     private Session session;
 
+    private boolean isAuthorized;
+
     /**
      * Constructor
      */
     Slice() {
         INSTANCE = this;
+        API.sendAuthRequest();
         componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
         session = new Session("Player", "0", "0", "legacy");
