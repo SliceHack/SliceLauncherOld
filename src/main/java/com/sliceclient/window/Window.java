@@ -1,5 +1,8 @@
 package com.sliceclient.window;
 
+import com.sliceclient.input.KeyHandler;
+import com.sliceclient.input.MouseHandler;
+import com.sliceclient.visual.Background;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /**
  * The window of the launcher
@@ -58,6 +62,13 @@ public class Window {
      * */
     public void addMouseListener(MouseListener listener) {
         frame.addMouseListener(listener);
+    }
+
+    /**
+     * adds a mouse motion listener to the frame
+     * */
+    public void addMouseMotionListener(MouseMotionListener listener) {
+        frame.addMouseMotionListener(listener);
     }
 
     /**

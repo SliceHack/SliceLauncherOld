@@ -4,13 +4,14 @@ import com.sliceclient.Slice;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 /**
  * The mouse handler class
  *
  * @author Nick
  * */
-public class MouseHandler extends MouseAdapter {
+public class MouseHandler extends MouseAdapter implements MouseMotionListener {
 
     /**
      * The mouse pressed method
@@ -22,6 +23,8 @@ public class MouseHandler extends MouseAdapter {
     }
 
     public void mouseMoved(MouseEvent e) {
+        Slice.INSTANCE.setMouseX(e.getX());
+        Slice.INSTANCE.setMouseY(e.getY());
         Slice.INSTANCE.getComponentManager().mouseMoved(e);
     }
 

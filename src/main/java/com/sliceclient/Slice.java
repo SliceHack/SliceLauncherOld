@@ -3,6 +3,7 @@ package com.sliceclient;
 import com.sliceclient.handler.ComponentManager;
 import com.sliceclient.input.KeyHandler;
 import com.sliceclient.input.MouseHandler;
+import com.sliceclient.minecraft.session.Session;
 import com.sliceclient.util.DownloadUtil;
 import com.sliceclient.util.UnzipUtil;
 import com.sliceclient.visual.Background;
@@ -33,6 +34,12 @@ public class Slice {
     /** manager */
     private ComponentManager componentManager;
 
+    /** mouse */
+    private float mouseX, mouseY;
+
+    /** Minecraft */
+    private Session session;
+
     /**
      * Constructor
      */
@@ -40,12 +47,17 @@ public class Slice {
         INSTANCE = this;
         componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
+        session = new Session("Player", "0", "0");
 
+        initBackground();
+        window.show(true);
+    }
+
+    public void initBackground() {
         window.addKeyListener(keyHandler = new KeyHandler());
         window.addMouseListener(mouseHandler = new MouseHandler());
+        window.addMouseMotionListener(mouseHandler);
         window.add(background = new Background());
-
-        window.show(true);
     }
 
     public void drawBackground() {

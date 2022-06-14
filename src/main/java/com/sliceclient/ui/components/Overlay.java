@@ -15,9 +15,11 @@ public class Overlay extends Component {
     private List<Button> buttons = new ArrayList<>();
 
     private int width, height;
+    private boolean loginField;
 
     public void init() {
-        buttons.add(new Button("Play", 150, 150, 5, 10, () -> System.out.println("Play")));
+        buttons.add(new Button("Play", 0, 120, width, 50, () -> System.out.println("Play")));
+        buttons.add(new Button("Login", 0, 180, width, 50, () -> loginField = !loginField));
         buttons.forEach(Component::init);
     }
 
@@ -32,8 +34,8 @@ public class Overlay extends Component {
         width = scaledWidth;
         height = getWindowHeight();
 
-        float scaledWidth2 = getWindowWidth() / 4.2f;
-        float scaledHeight = getWindowHeight() / 3.2f;
+        float scaledWidth2 = (getWindowWidth()+fontHeight) / 4.5f;
+        float scaledHeight = (getWindowHeight()-fontHeight) / 3.2f;
         float scaledX = (((getWindowWidth() - scaledWidth) / 2f)-(scaledWidth2));
         float scaledY = ((getWindowHeight() - fontHeight) / 2f)-(scaledHeight);
 

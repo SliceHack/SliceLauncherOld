@@ -1,5 +1,6 @@
 package com.sliceclient.ui.components;
 
+import com.sliceclient.Slice;
 import com.sliceclient.ui.Component;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,39 +32,33 @@ public class Button extends Component {
     }
 
     public void draw(Graphics2D g2d) {
-        this.width = getScaledWidth() / 3;
-        this.height = getScaledHeight() / 13;
-        float fontHeight = getScaledHeight() / 10.5f;
-        float radius = (getScaledHeight() + getScaledWidth()) / 50f;
+        this.width = g2d.getClipBounds().width / 3;
+        this.height = g2d.getClipBounds().height / 15;
 
-        this.hovered = mouseX >= this.x && mouseX <= this.x + this.width && mouseY >= this.y && mouseY <= this.y + this.height;
+        float fontHeight = g2d.getClipBounds().height / 15f;
+        float radius = (g2d.getClipBounds().height + g2d.getClipBounds().width) / 50f;
 
-        if (this.x == 0) {
-            this.x = 1;
-        }
+        if (this.x == 0) this.x = 1;
+        if (this.y == 0) this.y = 1;
 
-        if (this.y == 0) {
-            this.y = 1;
-        }
+        mouseX = Slice.INSTANCE.getMouseX();
+        mouseY = Slice.INSTANCE.getMouseY();
 
-        int y = (getScaledHeight() / 5) * this.y / 100;
-        int x = (getScaledWidth() / 9) * this.x / 100;
+        int y = (g2d.getClipBounds().height / 5) * this.y / 100;
+        int x = (g2d.getClipBounds().width / 9) * this.x / 100;
 
-        g2d.setFont(new Font("Poppins-Regular", Font.PLAIN, (int)fontHeight));
-        g2d.setColor(!hovered ? new Color(Integer.MIN_VALUE) : Color.pink);
-        g2d.drawRoundRect(x, y, width, height, (int)radius, (int)radius);
+        this.hovered = mouseX > x && mouseX < x + (width+radius) && mouseY > (y+30) && mouseY < (y+30) + height;
 
-        g2d.setColor(Color.WHITE);
-        g2d.drawString(this.text, x + (this.width / 2f),y + (this.height / 2f) - (fontHeight / 2) + 6);
-    }
+        g2d.setFont(new Font("Poppins-Regular", Font.BOLD, (int)fontHeight));
+        g2d.setColor(!hovered ? Color.WHITE : new Color(255, 155, 255));
+        g2d.fillRoundRect(x, y, width, height, (int)radius, (int)radius);
 
-    public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(text, x + (width / 2f) - (g2d.getFontMetrics().stringWidth(text) / 2f), y + (height / 2f) + (fontHeight / 3));
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (e.getX() > scaledX && e.getX() <= scaledX + scaledWidth && e.getY() > scaledY && (e.getY() <= scaledY + scaledHeight + scaledWidth)) {
+        if (hovered) {
             onClick.run();
         }
     }
