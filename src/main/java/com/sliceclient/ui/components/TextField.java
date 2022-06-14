@@ -32,7 +32,14 @@ public class TextField extends Component {
     }
 
     public void draw(Graphics2D g2d) {
+        int y = (g2d.getClipBounds().height / 5) * this.y / 100;
+        int x = (g2d.getClipBounds().width / 9) * this.x / 100;
 
+        g2d.drawString(typedText, x, y);
+
+        if(typedText.length() > 0) {
+
+        }
     }
 
     @SuppressWarnings("all")

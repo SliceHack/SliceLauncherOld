@@ -50,6 +50,8 @@ public class Background extends JComponent {
         Slice.INSTANCE.getComponentManager().draw(g2d);
         Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowHeight(getHeight()));
         Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowWidth(getWidth()));
+        Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setMouseX(Slice.INSTANCE.getMouseX()));
+        Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setMouseY(Slice.INSTANCE.getMouseY()));
     }
 
     /**

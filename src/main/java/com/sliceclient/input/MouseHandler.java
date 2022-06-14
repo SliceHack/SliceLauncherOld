@@ -25,6 +25,7 @@ public class MouseHandler extends MouseAdapter implements MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         Slice.INSTANCE.setMouseX(e.getX());
         Slice.INSTANCE.setMouseY(e.getY());
+
         Slice.INSTANCE.getComponentManager().mouseMoved(e);
     }
 

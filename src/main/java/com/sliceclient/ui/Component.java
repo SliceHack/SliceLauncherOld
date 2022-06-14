@@ -19,6 +19,9 @@ public abstract class Component {
     /** Window positions */
     private int windowHeight, windowWidth;
 
+    /** mouse positions */
+    private float mouseX, mouseY;
+
     /**
      * draws the component
      *
