@@ -1,12 +1,13 @@
-package com.sliceclient.ui.components;
+package com.sliceclient.ui.components.pane;
 
 import com.sliceclient.Slice;
 import com.sliceclient.minecraft.Minecraft;
 import com.sliceclient.ui.Component;
+import com.sliceclient.ui.components.Button;
+import com.sliceclient.ui.components.LoginField;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,26 +19,19 @@ public class Overlay extends Component {
     private List<Button> buttons = new ArrayList<>();
 
     private int width, height;
-    private boolean loginField;
-    private LoginField loginFieldInstance;
 
     public void init() {
         buttons.add(new Button("Play", 0, 120, width, 50, Minecraft::start));
-        buttons.add(new Button("Login", 0, 180, width, 50, () -> loginField = !loginField));
+        buttons.add(new Button("Login", 0, 180, width, 50, () -> Slice.INSTANCE.setLoginField(!Slice.INSTANCE.isLoginField())));
         buttons.forEach(Component::init);
     }
 
     public void draw(Graphics2D g2d) {
+        if(Slice.INSTANCE.isLoginField())
+            return;
+
         int fontHeight = g2d.getClipBounds().height / 9;
         Font font = new Font("Poppins-Thin", Font.PLAIN, fontHeight);
-
-        if(loginField) {
-            if(loginFieldInstance == null) {
-                loginFieldInstance = new LoginField(0, 0, width, height);
-                loginFieldInstance.init();
-            }
-            loginFieldInstance.draw(g2d);
-        }
 
         int scaledWidth = getWindowWidth() / 3;
         g2d.setColor(new Color(0, 0, 0, 0.5f));

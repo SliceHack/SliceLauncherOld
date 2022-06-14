@@ -1,6 +1,5 @@
-package com.sliceclient.ui.components;
+package com.sliceclient.ui.components.pane;
 
-import com.sliceclient.Slice;
 import com.sliceclient.ui.Component;
 import lombok.Getter;
 

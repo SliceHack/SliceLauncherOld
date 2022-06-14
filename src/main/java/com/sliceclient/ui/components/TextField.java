@@ -19,6 +19,8 @@ public class TextField extends Component {
     private String typedText, highlightedText;
     private boolean hiddenText;
 
+    private int cursorPosition;
+
     private int[] disallowedKeys = { KeyEvent.VK_BACK_SPACE, KeyEvent.VK_DELETE, KeyEvent.VK_ENTER, KeyEvent.VK_ESCAPE, KeyEvent.VK_TAB };
 
     public TextField(int x, int y, int width, int height) {
@@ -35,6 +37,7 @@ public class TextField extends Component {
         int y = (g2d.getClipBounds().height / 5) * this.y / 100;
         int x = (g2d.getClipBounds().width / 9) * this.x / 100;
 
+        g2d.drawRect(x, y, (g2d.getClipBounds().width / 9) * this.width / 100, (g2d.getClipBounds().height / 5) * this.height / 100);
         g2d.drawString(highlightedText.length() > 0 ? typedText.replace(highlightedText, "") : typedText, x, y);
 
         if(typedText.length() > 0) {
@@ -45,7 +48,7 @@ public class TextField extends Component {
     @SuppressWarnings("all")
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) backspace();
-        else if(e.getKeyCode() == KeyEvent.VK_SPACE) typedText += " ";
+        else if(e.getKeyCode() == KeyEvent.VK_SPACE) space();
         else if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_C) controlC();
         else if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_V) controlV();
         else if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_X) controlX();
@@ -58,6 +61,14 @@ public class TextField extends Component {
                 typedText = sb.toString();
             }
         }
+    }
+
+    /**
+     * Space
+     */
+    public void space() {
+        typedText += " ";
+        cursorPosition++;
     }
 
     /**
@@ -98,6 +109,7 @@ public class TextField extends Component {
         if (typedText.length() > 0) {
             typedText = typedText.substring(0, typedText.length() - 1);
         }
+        cursorPosition--;
     }
 
 

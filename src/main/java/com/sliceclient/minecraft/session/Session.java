@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 public class Session {
-    private String name, uuid, accessToken, userType;
+    private String name, uuid, accessToken, userType, refreshToken;
 }

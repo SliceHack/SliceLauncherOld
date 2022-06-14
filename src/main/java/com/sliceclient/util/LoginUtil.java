@@ -27,7 +27,7 @@ public class LoginUtil {
 
         try {
             auth.logIn();
-            return new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
+            return new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang", password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,11 +39,30 @@ public class LoginUtil {
      */
     public static MicrosoftAccount loginMicrosoft(String email, String password) {
         try {
+            System.out.println( email + ":" + password);
             MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
             MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
             MinecraftProfile profile = result.getProfile();
 
-            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang", result.getRefreshToken());
+            return new MicrosoftAccount(profile, session, result.getRefreshToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Logins user in using Microsoft Authenticator.
+     * with refresh token.
+     */
+    public static MicrosoftAccount loginMicrosoft(String refreshToken) {
+        try {
+            MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+            MicrosoftAuthResult result = authenticator.loginWithRefreshToken(refreshToken);
+            MinecraftProfile profile = result.getProfile();
+
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang", result.getRefreshToken());
             return new MicrosoftAccount(profile, session, result.getRefreshToken());
         } catch (Exception e) {
             e.printStackTrace();

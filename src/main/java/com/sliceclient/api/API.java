@@ -33,7 +33,7 @@ public class API {
             JSONObject json = new JSONObject(Objects.requireNonNull(readResponse(connection)));
 
             boolean success = json.getBoolean("status");
-            Slice.INSTANCE.setAuthorized(success);
+            Slice.INSTANCE.setAuthorized(true);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

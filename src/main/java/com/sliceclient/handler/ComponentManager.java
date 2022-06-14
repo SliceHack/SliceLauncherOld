@@ -2,13 +2,12 @@ package com.sliceclient.handler;
 
 import com.sliceclient.Slice;
 import com.sliceclient.ui.Component;
-import com.sliceclient.ui.components.Button;
-import com.sliceclient.ui.components.NotAuth;
-import com.sliceclient.ui.components.Overlay;
+import com.sliceclient.ui.components.pane.NotAuth;
+import com.sliceclient.ui.components.pane.Overlay;
+import com.sliceclient.ui.components.pane.UI;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -26,8 +25,12 @@ public class ComponentManager extends Component {
     private List<Component> components = new ArrayList<>();
 
     public ComponentManager() {
-        if(Slice.INSTANCE.isAuthorized()) register(new Overlay());
-        else register(new NotAuth());
+        if(Slice.INSTANCE.isAuthorized()) {
+            register(new UI());
+            register(new Overlay());
+        } else {
+            register(new NotAuth());
+        }
         components.forEach(Component::init);
     }
 
