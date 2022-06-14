@@ -35,10 +35,10 @@ public class TextField extends Component {
         int y = (g2d.getClipBounds().height / 5) * this.y / 100;
         int x = (g2d.getClipBounds().width / 9) * this.x / 100;
 
-        g2d.drawString(typedText, x, y);
+        g2d.drawString(highlightedText.length() > 0 ? typedText.replace(highlightedText, "") : typedText, x, y);
 
         if(typedText.length() > 0) {
-
+            g2d.drawString(highlightedText, g2d.getFontMetrics().stringWidth(typedText.replace(highlightedText, "")) + x, y);
         }
     }
 

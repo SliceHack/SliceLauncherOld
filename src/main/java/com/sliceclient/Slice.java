@@ -50,14 +50,16 @@ public class Slice {
         componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
         session = new Session("Player", "0", "0", "legacy");
-        window.show(true);
+        initBackground();
     }
 
     public void initBackground() {
+        System.out.println("Initializing background...");
         window.addKeyListener(keyHandler = new KeyHandler());
         window.addMouseListener(mouseHandler = new MouseHandler());
         window.addMouseMotionListener(mouseHandler);
         window.add(background = new Background());
+        window.show(true);
     }
 
     public void drawBackground() {
@@ -72,6 +74,7 @@ public class Slice {
      * */
     @SuppressWarnings("all")
     public static void main(String[] args) {
+        System.setProperty("user.dir", System.getProperty("user.home") + File.separator + "Slice");
         String path = System.getProperty("user.home") + "//Slice//assets//launcher//background";
 
         File parent = new File(path).getParentFile(),
