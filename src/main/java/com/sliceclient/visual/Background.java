@@ -47,6 +47,16 @@ public class Background extends JComponent {
             updateIndex();
             tick = 0;
         }
+
+
+        int width = (getFontMetrics(getFont()).stringWidth("User Logged in " + Slice.INSTANCE.getSession().getName())*2)-10;
+
+        g2d.setColor(new Color(0, 0, 0, 0.5f));
+        g2d.fillRoundRect(getWidth() - width, 0, width, 45, 25, 25);
+        g2d.setFont(new Font("Poppins", Font.BOLD, 20));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("User Logged in " + Slice.INSTANCE.getSession().getName(), getWidth() - g2d.getFontMetrics().stringWidth("User Logged in " + Slice.INSTANCE.getSession().getName()) - 20, 30);
+
         Slice.INSTANCE.getComponentManager().draw(g2d);
         Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowHeight(getHeight()));
         Slice.INSTANCE.getComponentManager().getComponents().forEach(component -> component.setWindowWidth(getWidth()));

@@ -7,6 +7,7 @@ import com.sliceclient.input.MouseHandler;
 import com.sliceclient.minecraft.session.Session;
 import com.sliceclient.util.DownloadUtil;
 import com.sliceclient.util.HardwareUtil;
+import com.sliceclient.util.LoginUtil;
 import com.sliceclient.util.UnzipUtil;
 import com.sliceclient.visual.Background;
 import com.sliceclient.window.Window;
@@ -53,7 +54,6 @@ public class Slice {
         componentManager = new ComponentManager();
         window = new Window("Slice", 800, 600);
         session = new Session("Player", "0", "0", "legacy");
-
         initBackground();
     }
 
