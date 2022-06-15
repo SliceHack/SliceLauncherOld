@@ -1,6 +1,5 @@
 package com.sliceclient;
 
-import com.sliceclient.api.API;
 import com.sliceclient.config.Config;
 import com.sliceclient.handler.ComponentManager;
 import com.sliceclient.input.KeyHandler;
@@ -13,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.util.Objects;
 
 import static com.sliceclient.api.API.sendAuthRequest;
 
@@ -115,7 +113,7 @@ public class Slice {
         }
 
         if(!file3.exists()) {
-            DownloadUtil.downloadFile("https://download1335.mediafire.com/bsaxrbjdduwg/z5pqhkbf25vpwgk/SliceLib.zip", ziplib.getAbsolutePath());
+            DownloadUtil.downloadFile("https://api.sliceclient.com/download/lib", ziplib.getAbsolutePath());
             UnzipUtil.unzip(ziplib.getAbsolutePath(), filelib.getAbsolutePath());
         }
 
